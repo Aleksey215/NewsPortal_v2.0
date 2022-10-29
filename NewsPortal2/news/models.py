@@ -10,7 +10,7 @@ class Author(models.Model):
     rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'Author: {self.author_user}'
+        return self.author_user
 
     def update_rating(self):
         """
@@ -37,7 +37,7 @@ class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
     def __str__(self):
-        return f'Category: {self.name}'
+        return self.name
 
 
 class Post(models.Model):
@@ -59,7 +59,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'Post:{self.title} In category:{self.category}'
+        return f'Title:{self.title} In category:{self.category}'
 
     def like(self):
         self.rating += 1
@@ -70,7 +70,7 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        return f'{self.rating[:125]} + {"..."}'
+        return f'{self.content[:125]} + {"..."}'
 
 
 class Comment(models.Model):
