@@ -26,6 +26,9 @@ class Author(models.Model):
         self.author_rating = post_rat * 3 + com_rat
         self.save()
 
+    def __str__(self):
+        return f'{self.author_user}'
+
 
 class Category(models.Model):
     """
