@@ -10,7 +10,7 @@ class CreatePostView(CreateView):
     """
     model = Post
     template_name = 'post_create.html'
-    fields = ('author', 'type', 'title', 'content')
+    fields = ('author', 'type', 'title', 'content', 'category')
     success_url = '/'
 
 
@@ -29,10 +29,13 @@ class DetailPostView(DetailView):
     """
     model = Post
     template_name = 'post_detail.html'
+    context_object_name = 'post'
 
 
 class DeletePostView(DeleteView):
     """
     Удаление публикации
     """
-    pass
+    model = Post
+    template_name = 'post_delete.html'
+    success_url = '/'

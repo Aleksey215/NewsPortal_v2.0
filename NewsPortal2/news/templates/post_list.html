@@ -5,5 +5,51 @@ Posts
 {% endblock %}
 
 {% block content %}
-Hello from post list
+<style>
+   a {
+    text-decoration: none; /* Отменяем подчеркивание у ссылки */
+   }
+</style>
+<table width="100%" align="center">
+    <thead>
+    <tr>
+        <td>
+            <b>Title</b>
+        </td>
+        <td>
+            <b>Content</b>
+        </td>
+        <td>
+            <b>Author</b>
+        </td>
+        <td>
+            <b>Category</b>
+        </td>
+        <td>
+            <b>Type</b>
+        </td>
+    </tr>
+    </thead>
+    {% for post in posts %}
+    <tr>
+        <td>
+             <a href="{% url 'post_detail' post.id %}" style="color: #00bc00">{{ post.title }}</a>
+        </td>
+        <td>
+            {{ post.content }}
+        </td>
+        <td>
+            {{ post.author }}
+        </td>
+        <td>
+            {% for category in post.category.all %}
+            {{ category }}<br>
+            {% endfor %}
+        </td>
+        <td>
+            {{ post.type }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

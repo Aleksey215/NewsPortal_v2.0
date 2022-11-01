@@ -1,11 +1,11 @@
 {% extends 'index.html' %}
 
 {% block title %}
-Post Detail
+Post Delete
 {% endblock %}
 
 {% block content %}
-<style>
+ <style>
    table {
     width: 100%; /* Ширина таблицы */
     background: white; /* Цвет фона таблицы */
@@ -19,8 +19,7 @@ Post Detail
    a {
     text-decoration: none; /* Отменяем подчеркивание у ссылки */
    }
-
-</style>
+  </style>
 <table align="left" cellpadding="20">
     <tr>
         <td>
@@ -97,7 +96,9 @@ Post Detail
         </td>
     </tr>
 </table>
-<button type="button" class="btn btn-danger">
-    <a href="{% url 'post_delete' post.id %}" style="color:white">Delete</a>
-</button>
+<hr>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
 {% endblock %}
