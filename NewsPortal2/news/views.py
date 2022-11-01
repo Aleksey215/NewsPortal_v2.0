@@ -9,20 +9,26 @@ class CreatePostView(CreateView):
     Создание публикации
     """
     model = Post
+    template_name = 'post_create.html'
+    fields = ('author', 'type', 'title', 'content')
+    success_url = '/'
 
 
-class PostsListView(ListView):
+class ListPostsView(ListView):
     """
     Список всех публикаций
     """
-    pass
+    model = Post
+    template_name = 'post_list.html'
+    context_object_name = 'posts'
 
 
 class DetailPostView(DetailView):
     """
     Подробная ин-ия о публикации
     """
-    pass
+    model = Post
+    template_name = 'post_detail.html'
 
 
 class DeletePostView(DeleteView):
