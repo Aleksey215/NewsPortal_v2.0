@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, DeleteView, ListView
+from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
 
 from .models import Author, Category, Comment, Post
 
@@ -30,6 +30,13 @@ class DetailPostView(DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    template_name = 'post_create.html'
+    fields = ('author', 'type', 'title', 'content', 'category')
+    success_url = '/'
 
 
 class DeletePostView(DeleteView):

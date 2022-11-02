@@ -47,10 +47,10 @@ Post Detail
             <h3 align="left">Category: </h3>
         </td>
         <td>
-
             <p align="left">
                 {% for category in post.category.all %}
                 <font size="5"> "{{ category }}" </font>
+                <br>
                 {% endfor %}
             </p>
 
@@ -78,11 +78,11 @@ Post Detail
     </tr>
     <tr>
         <td>
-            <h3 align="left">Time: &nbsp</h3>
+            <h3 align="left">Date/Time: &nbsp</h3>
         </td>
         <td align="left">
             <p align="left">
-                <font size="5"> {{ post.time_of_creation }} </font>
+                <font size="5"> {{ post.time_of_creation|date:'d.m.Y/H:i' }} </font>
             </p>
         </td>
     </tr>
@@ -100,4 +100,7 @@ Post Detail
 <button type="button" class="btn btn-danger">
     <a href="{% url 'post_delete' post.id %}" style="color:white">Delete</a>
 </button>
+<button type="button" class="btn btn-secondary">
+        <a href="{% url 'post_update' post.id %}" style="color:white">Edit</a>
+    </button>
 {% endblock %}
