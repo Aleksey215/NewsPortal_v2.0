@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
 
 from .models import Author, Category, Comment, Post
+from .filters import PostFilter
 
 
 class CreatePostView(CreateView):
@@ -23,6 +24,11 @@ class ListPostsView(ListView):
     context_object_name = 'posts'
     ordering = ['-id']
     paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = PostFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class DetailPostView(DetailView):

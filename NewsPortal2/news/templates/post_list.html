@@ -1,5 +1,7 @@
 {% extends 'index.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}
 Posts
 {% endblock %}
@@ -20,6 +22,13 @@ Posts
     text-decoration: none; /* Отменяем подчеркивание у ссылки */
    }
 </style>
+
+<form method="GET">
+    {{ filter.form|crispy }}
+    <br>
+    <button type="submit" class="btn btn-success">Search</button>
+</form>
+
 <table align="center">
     <thead>
     <tr>
@@ -35,7 +44,7 @@ Posts
 
     </tr>
     </thead>
-    {% for post in posts %}
+    {% for post in filter.qs %}
     <tr>
         <td align="center">
              <a href="{% url 'post_detail' post.id %}" style="color: #00bc00">{{ post.title }}</a>

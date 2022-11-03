@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # bootstrap
     'crispy_forms',
+    # filters.py
+    'django_filters',
 
     # my apps
     'news.apps.NewsConfig',
