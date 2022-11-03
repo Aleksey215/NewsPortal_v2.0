@@ -6,50 +6,69 @@ Posts
 
 {% block content %}
 <style>
+   table {
+    width: 100%; /* Ширина таблицы */
+    background: white; /* Цвет фона таблицы */
+    border: 10px;
+   }
+   td, th {
+    padding: 10px; /* Поля вокруг текста */
+    border: 10px;
+    vertical-align: 10px;
+   }
    a {
     text-decoration: none; /* Отменяем подчеркивание у ссылки */
    }
 </style>
-<table width="100%" align="center">
+<table align="center">
     <thead>
     <tr>
-        <td>
+        <td align="center">
             <b>Title</b>
         </td>
         <td>
+            <b>Date/Time</b>
+        </td>
+        <td align="left">
             <b>Content</b>
         </td>
-        <td>
-            <b>Author</b>
-        </td>
-        <td>
-            <b>Category</b>
-        </td>
-        <td>
-            <b>Type</b>
-        </td>
+
     </tr>
     </thead>
     {% for post in posts %}
     <tr>
-        <td>
+        <td align="center">
              <a href="{% url 'post_detail' post.id %}" style="color: #00bc00">{{ post.title }}</a>
         </td>
         <td>
-            {{ post.content }}
+            {{ post.time_of_creation|date:'d.m.Y/H:i' }}
         </td>
-        <td>
-            {{ post.author }}
-        </td>
-        <td>
-            {% for category in post.category.all %}
-            {{ category }}<br>
-            {% endfor %}
-        </td>
-        <td>
-            {{ post.type }}
+        <td align="left">
+            {{ post.content|truncatechars:50 }}
         </td>
     </tr>
     {% endfor %}
 </table>
+
+{% if is_paginated %}
+<!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+{% if page_obj.has_previous %}
+<a href="?page=1">First</a>
+<a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+{% endif %}
+<!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+{% for num in page_obj.paginator.page_range %}
+{% if page_obj.number == num %}
+<a>{{ num }}</a>
+{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+<a href="?page={{ num }}">{{ num }}</a>
+{% endif %}
+{% endfor %}
+<!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">>>></a>
+<a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+{% endif %}
+{% endif %}
+
 {% endblock %}
