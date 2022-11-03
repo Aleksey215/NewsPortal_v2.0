@@ -10,7 +10,6 @@ Posts
 <style>
    table {
     width: 100%; /* Ширина таблицы */
-    background: white; /* Цвет фона таблицы */
     border: 10px;
    }
    td, th {
@@ -21,6 +20,7 @@ Posts
    a {
     text-decoration: none; /* Отменяем подчеркивание у ссылки */
    }
+
 </style>
 
 <form method="GET">
@@ -28,7 +28,7 @@ Posts
     <br>
     <button type="submit" class="btn btn-success">Search</button>
 </form>
-
+<hr>
 <table align="center">
     <thead>
     <tr>
@@ -38,22 +38,31 @@ Posts
         <td>
             <b>Date/Time</b>
         </td>
-        <td align="left">
+        <td align="center">
             <b>Content</b>
         </td>
-
+        <td align="left">
+            <b>Category</b>
+        </td>
     </tr>
     </thead>
     {% for post in filter.qs %}
     <tr>
         <td align="center">
-             <a href="{% url 'post_detail' post.id %}" style="color: #00bc00">{{ post.title }}</a>
+            <a href="{% url 'post_detail' post.id %}" style="color: #00bc00">{{ post.title }}</a>
         </td>
         <td>
             {{ post.time_of_creation|date:'d.m.Y/H:i' }}
         </td>
-        <td align="left">
+        <td align="center">
             {{ post.content|truncatechars:50 }}
+        </td>
+        <td>
+            <p align="left">
+                {% for category in post.category.all %}
+                "{{ category }}"
+                {% endfor %}
+            </p>
         </td>
     </tr>
     {% endfor %}

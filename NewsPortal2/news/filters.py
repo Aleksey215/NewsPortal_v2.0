@@ -1,7 +1,7 @@
 import django_filters
 from django_filters import FilterSet
 
-from .models import Author, Post
+from .models import Author, Category, Post
 
 
 class PostFilter(FilterSet):
@@ -15,6 +15,11 @@ class PostFilter(FilterSet):
         label='Author of creation',
         lookup_expr='exact',
         queryset=Author.objects.all()
+    )
+    category = django_filters.filters.ModelMultipleChoiceFilter(
+        field_name='category__name',
+        to_field_name='name',
+        queryset=Category.objects.all()
     )
     time_of_creation = django_filters.DateTimeFilter(
         field_name='time_of_creation',
