@@ -30,10 +30,14 @@
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/post_create/">Create post</a></li>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Posts</a></li>
+                    </ul>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if request.user.username %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle"
                                id="navbarDropdown"
@@ -41,15 +45,23 @@
                                role="button"
                                data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                Dropdown
+                                <font color="ffcf00">{{ request.user.username }}</font>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="/post_create/">Create post</a></li>
+                                <li><a class="dropdown-item" href="/protect/">Profile</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" href="/accounts/logout/">Logout</a></li>
                             </ul>
                         </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light me-2" href="/accounts/login/"> SignIn </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-warning" href="/accounts/signup/"> SignUp </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
