@@ -10,12 +10,6 @@ class PostFilter(FilterSet):
         label='Title of post',
         lookup_expr='icontains'
     )
-    author = django_filters.ModelChoiceFilter(
-        field_name='author',
-        label='Author of creation',
-        lookup_expr='exact',
-        queryset=Author.objects.all()
-    )
     category = django_filters.filters.ModelMultipleChoiceFilter(
         field_name='category__name',
         to_field_name='name',

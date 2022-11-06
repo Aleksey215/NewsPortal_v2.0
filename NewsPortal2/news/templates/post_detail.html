@@ -1,5 +1,7 @@
 {% extends 'index.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}
 Post Detail
 {% endblock %}
@@ -97,10 +99,21 @@ Post Detail
         </td>
     </tr>
 </table>
-<button type="button" class="btn btn-danger">
-    <a href="{% url 'post_delete' post.id %}" style="color:white">Delete</a>
-</button>
-<button type="button" class="btn btn-secondary">
+<p style="text-align: left">
+<form action="" method="post">
+    {% csrf_token %}
+    {{ comment_form|crispy }}
+    <br>
+    <button type="submit" class="btn btn-success">Comment</button>
+</form>
+</p>
+<p align="right">
+    <button type="button" class="btn btn-danger">
+        <a href="{% url 'post_delete' post.id %}" style="color:white">Delete</a>
+    </button>
+    <button type="button" class="btn btn-secondary">
         <a href="{% url 'post_update' post.id %}" style="color:white">Edit</a>
     </button>
+</p>
+
 {% endblock %}

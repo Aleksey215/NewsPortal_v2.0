@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
 
 from .models import Author, Category, Comment, Post
 from .filters import PostFilter
+from .forms import CommentForm
 
 
-class CreatePostView(CreateView):
+class PostCreateView(CreateView):
     """
     Создание публикации
     """
@@ -15,7 +16,7 @@ class CreatePostView(CreateView):
     success_url = '/'
 
 
-class ListPostsView(ListView):
+class PostsListView(ListView):
     """
     Список всех публикаций
     """
@@ -31,7 +32,7 @@ class ListPostsView(ListView):
         return context
 
 
-class DetailPostView(DetailView):
+class PostDetailView(DetailView):
     """
     Подробная ин-ия о публикации
     """
@@ -39,15 +40,42 @@ class DetailPostView(DetailView):
     template_name = 'post_detail.html'
     context_object_name = 'post'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # добавление формы комментариев
+        context['comment_form'] = CommentForm()
+        return context
 
-class UpdatePostView(UpdateView):
+    def post(self, request, pk):
+        """
+        для добавления формы отклика на страницу объявления
+        пользователь может оставить отклик на странице post_detail
+        :param request:
+        :param pk:
+        :return:
+        """
+        post = self.get_object(pk=pk)
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.post = post
+            obj.author = self.request.user
+            obj.save()
+            return redirect('post_detail', post.pk)
+
+
+class PostUpdateView(UpdateView):
+    """
+    Редактирование публикации
+    """
     model = Post
     template_name = 'post_create.html'
     fields = ('author', 'type', 'title', 'content', 'category')
     success_url = '/'
 
 
-class DeletePostView(DeleteView):
+class PostDeleteView(DeleteView):
     """
     Удаление публикации
     """

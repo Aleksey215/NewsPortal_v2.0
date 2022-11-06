@@ -13,14 +13,13 @@ Posts
     border: 10px;
    }
    td, th {
-    padding: 10px; /* Поля вокруг текста */
+    padding: 5px; /* Поля вокруг текста */
     border: 10px;
     vertical-align: 10px;
    }
    a {
     text-decoration: none; /* Отменяем подчеркивание у ссылки */
    }
-
 </style>
 
 <form method="GET">
@@ -29,6 +28,7 @@ Posts
     <button type="submit" class="btn btn-success">Search</button>
 </form>
 <hr>
+{% if filter.qs %}
 <table align="center">
     <thead>
     <tr>
@@ -67,6 +67,9 @@ Posts
     </tr>
     {% endfor %}
 </table>
+{% else %}
+<h3 align="center">Posts not found</h3>
+{% endif %}
 
 {% if is_paginated %}
 <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
