@@ -167,6 +167,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_FORMS = {'signup': 'allauth.account.forms.SignupForm'}
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
+# для автоматического добавления пользователя в группу при регистрации
+ACCOUNT_FORMS = {'signup': 'protect.models.BasicSignupForm'}
 
 # Настройки почтового ящика для рассылки писем
 EMAIL_HOST = os.getenv("HOST")
