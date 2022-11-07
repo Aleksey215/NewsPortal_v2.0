@@ -4,4 +4,8 @@
 
 {% block content %}
 <h2>Hello from allauth {{request.user.username}}</h2>
+<br>
+{% if is_not_author %}
+<button><a href="/protect/upgrade/">Become an author</a></button>
+{% endif %}
 {% endblock %}
