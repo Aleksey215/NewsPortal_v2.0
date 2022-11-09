@@ -3,7 +3,7 @@ from django.views.generic import CreateView, DetailView, DeleteView, ListView, U
 
 from .models import Author, Category, Comment, Post
 from .filters import PostFilter
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 
 
 class PostCreateView(CreateView):
@@ -12,8 +12,13 @@ class PostCreateView(CreateView):
     """
     model = Post
     template_name = 'post_create.html'
-    fields = ('author', 'type', 'title', 'content', 'category')
+    form_class = PostForm
     success_url = '/'
+
+    def form_valid(self, form):
+        current_user = self.request.user
+        form.instance.author = Author.objects.get(author_user=current_user)
+        return super(PostCreateView, self).form_valid(form)
 
 
 class PostsListView(ListView):

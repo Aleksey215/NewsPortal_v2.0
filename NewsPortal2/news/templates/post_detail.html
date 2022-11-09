@@ -107,6 +107,7 @@ Post Detail
     <button type="submit" class="btn btn-success">Comment</button>
 </form>
 </p>
+{% if request.user == post.author %}
 <p align="right">
     <button type="button" class="btn btn-danger">
         <a href="{% url 'post_delete' post.id %}" style="color:white">Delete</a>
@@ -115,5 +116,6 @@ Post Detail
         <a href="{% url 'post_update' post.id %}" style="color:white">Edit</a>
     </button>
 </p>
+{% endif %}
 
 {% endblock %}
