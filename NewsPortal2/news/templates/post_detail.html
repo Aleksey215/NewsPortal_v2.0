@@ -21,8 +21,8 @@ Post Detail
    a {
     text-decoration: none; /* Отменяем подчеркивание у ссылки */
    }
-
 </style>
+
 <table align="left" cellpadding="20">
     <tr>
         <td>
@@ -99,6 +99,8 @@ Post Detail
         </td>
     </tr>
 </table>
+
+{% if registered_user %}
 <p style="text-align: left">
 <form action="" method="post">
     {% csrf_token %}
@@ -107,7 +109,9 @@ Post Detail
     <button type="submit" class="btn btn-success">Comment</button>
 </form>
 </p>
-{% if request.user == post.author %}
+{% endif %}
+
+{% if own_post %}
 <p align="right">
     <button type="button" class="btn btn-danger">
         <a href="{% url 'post_delete' post.id %}" style="color:white">Delete</a>

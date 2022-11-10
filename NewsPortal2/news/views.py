@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
 
-from .models import Author, Category, Comment, Post
+from .models import Author, Category, Comment, Post, User
 from .filters import PostFilter
 from .forms import CommentForm, PostForm
 
@@ -47,8 +47,15 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        id = self.kwargs.get('pk')
+        post = Post.objects.get(pk=id)
+        current_user = self.request.user
         # добавление формы комментариев
         context['comment_form'] = CommentForm()
+        # комментировать могут только зарегистрированные пользователи
+        context['registered_user'] = True if current_user in User.objects.all() else False
+        # удалять и редактировать можно только собственные посты
+        context['own_post'] = True if current_user == post.author.author_user else False
         return context
 
     def post(self, request, pk):
