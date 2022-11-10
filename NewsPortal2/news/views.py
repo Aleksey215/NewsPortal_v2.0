@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .models import Author, Category, Comment, Post, User
 from .filters import PostFilter
 from .forms import CommentForm, PostForm
 
 
-class PostCreateView(CreateView):
+class PostCreateView(PermissionRequiredMixin, CreateView):
     """
     Создание публикации
     """
@@ -14,6 +15,7 @@ class PostCreateView(CreateView):
     template_name = 'post_create.html'
     form_class = PostForm
     success_url = '/'
+    permission_required = ('news.add_post',)
 
     def form_valid(self, form):
         current_user = self.request.user
@@ -77,7 +79,7 @@ class PostDetailView(DetailView):
             return redirect('post_detail', post.pk)
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(PermissionRequiredMixin, UpdateView):
     """
     Редактирование публикации
     """
@@ -85,9 +87,10 @@ class PostUpdateView(UpdateView):
     template_name = 'post_create.html'
     fields = ('author', 'type', 'title', 'content', 'category')
     success_url = '/'
+    permission_required = ('news.change_post',)
 
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(PermissionRequiredMixin, DeleteView):
     """
     Удаление публикации
     """
