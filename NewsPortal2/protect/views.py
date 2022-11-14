@@ -23,6 +23,11 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 @login_required
 def upgrade(request):
+    """
+    Пользователь может стать автором
+    :param request:
+    :return:
+    """
     user = request.user
     authors_group = Group.objects.get(name='authors')
     if not user.groups.filter(name='authors').exists():
@@ -33,6 +38,11 @@ def upgrade(request):
 
 @login_required
 def downgrade(request):
+    """
+    Пользователь может стать обычным пользователем
+    :param request:
+    :return:
+    """
     user = request.user
     authors_group = Group.objects.get(name='authors')
     if user.groups.filter(name='authors').exists():
