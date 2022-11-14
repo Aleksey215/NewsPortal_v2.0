@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Categories {% endblock %}
+
+{% block content %}
+
+<style>
+   table {
+    width: 100%; /* Ширина таблицы */
+    border: 10px;
+   }
+   td, th {
+    padding: 5px; /* Поля вокруг текста */
+    border: 10px;
+    vertical-align: 10px;
+   }
+   a {
+    text-decoration: none; /* Отменяем подчеркивание у ссылки */
+   }
+</style>
+
+{% if categories %}
+<table>
+    {% for category in categories %}
+    <tr>
+        <td>
+            <b>"{{ category.name }}"</b>
+        </td>
+        <td align="left">
+            <button type="submit" class="btn btn-success">Subscribe</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

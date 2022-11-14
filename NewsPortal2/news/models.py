@@ -35,6 +35,7 @@ class Category(models.Model):
     Категории публикаций
     """
     name = models.CharField(max_length=64, unique=True)
+    subscribers = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
