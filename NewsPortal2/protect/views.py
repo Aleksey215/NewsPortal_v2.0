@@ -29,3 +29,13 @@ def upgrade(request):
         authors_group.user_set.add(user)
         Author.objects.create(author_user=user)
     return redirect('/')
+
+
+@login_required
+def downgrade(request):
+    user = request.user
+    authors_group = Group.objects.get(name='authors')
+    if user.groups.filter(name='authors').exists():
+        authors_group.user_set.remove(user)
+        Author.objects.get(author_user=user).delete()
+    return redirect('/')

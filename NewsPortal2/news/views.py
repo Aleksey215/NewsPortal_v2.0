@@ -100,11 +100,37 @@ class PostDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class CategoryList(ListView):
+    """
+    Список категорий публикаций
+    """
     model = Category
     template_name = 'category_list.html'
     context_object_name = 'categories'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        current_user = self.request.user
-        return context
+
+def add_subscriber(request, **kwargs):
+    """
+    для подписки пользователя на новостную рассылку
+    :param request:
+    :param kwargs:
+    :return:
+    """
+    pk = kwargs.get('pk')
+    category = Category.objects.get(pk=pk)
+    curr_usr = request.user
+    category.subscribers.add(curr_usr)
+    return redirect('/categories/')
+
+
+def remove_subscriber(request, **kwargs):
+    """
+    для отказа от новостной рассылки
+    :param request:
+    :param kwargs:
+    :return:
+    """
+    pk = kwargs.get('pk')
+    category = Category.objects.get(pk=pk)
+    curr_usr = request.user
+    category.subscribers.remove(curr_usr)
+    return redirect('/categories/')
