@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block title %} Category Detail {% endblock %}
+
+{% block content %}
+
+<h4 align="left"> {{ category.name }} </h4>
+{% if request.user in category.subscribers.all %}
+<button type="submit" class="btn btn-danger">
+    <a href="/remove_subscriber/{{category.id}} " style="color: white">Unsubscribe</a>
+</button>
+{% else %}
+<button type="submit" class="btn btn-success">
+    <a href="/add_subscriber/{{ category.id }}" style="color: white">Subscribe</a>
+</button>
+{% endif %}
+
+{% endblock %}

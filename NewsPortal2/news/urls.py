@@ -9,6 +9,7 @@ urlpatterns = [
     path('post_delete/<int:pk>', PostDeleteView.as_view(), name='post_delete'),
     path('post_create/<int:pk>', PostUpdateView.as_view(), name='post_update'),
     path('categories/', CategoryList.as_view(), name='categories_list'),
-    path('categories/add_subscriber/<int:pk>', add_subscriber, name='add_subscriber'),
-    path('categories/remove_subscriber/<int:pk>', remove_subscriber, name='remove_subscriber'),
+    path('add_subscriber/<int:pk>', add_subscriber, name='add_subscriber'),
+    path('remove_subscriber/<int:pk>', remove_subscriber, name='remove_subscriber'),
+    path('category_detail/<int:pk>', CategoryDetail.as_view(), name='category_detail'),
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 from .models import Author, Category, Comment, Post, User
 from .filters import PostFilter
@@ -106,6 +106,15 @@ class CategoryList(ListView):
     model = Category
     template_name = 'category_list.html'
     context_object_name = 'categories'
+
+
+class CategoryDetail(LoginRequiredMixin, DetailView):
+    """
+    Страница категории
+    """
+    model = Category
+    template_name = 'category_detail.html'
+    context_object_name = 'category'
 
 
 def add_subscriber(request, **kwargs):

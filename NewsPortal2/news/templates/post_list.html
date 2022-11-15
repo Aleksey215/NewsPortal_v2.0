@@ -60,7 +60,7 @@ Posts
         <td>
             <p align="left">
                 {% for category in post.category.all %}
-                "{{ category }}"
+                <a href="{% url 'category_detail' category.id %}">"{{ category }}"</a>
                 {% endfor %}
             </p>
         </td>
