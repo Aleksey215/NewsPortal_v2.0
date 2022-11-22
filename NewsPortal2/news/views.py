@@ -97,6 +97,7 @@ class PostDeleteView(PermissionRequiredMixin, DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = '/'
+    permission_required = ('news.delete_post',)
 
 
 class CategoryList(ListView):
