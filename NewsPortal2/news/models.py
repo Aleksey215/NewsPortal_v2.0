@@ -60,7 +60,7 @@ class Post(models.Model):
     post_rating = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'Title:{self.title} In category:{self.category.name}'
+        return f'Title:{self.title}'
 
     def like(self):
         self.post_rating += 1

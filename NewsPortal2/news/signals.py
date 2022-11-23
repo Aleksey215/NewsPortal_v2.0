@@ -1,18 +1,18 @@
 # для получения сигнала о создании нового объекта
+import time
+
 from django.db.models.signals import post_save
 # декоратор для подключения функции к нужному сигналу
 from django.dispatch import receiver
 from django.core.mail import EmailMultiAlternatives
+from time import sleep
 
-from models import Post
+from .models import *
 
 
 @receiver(signal=post_save, sender=Post)
 def notify_subscribers(sender, instance, created, **kwargs):
-    if created:
-        recipients_emails = []
-        post_categories = instance.category.all()
-        for category in post_categories:
-            for subscriber in category.subscribers.all():
-                recipients_emails.append(subscriber.email)
-        print(recipients_emails)
+        categories = Category.objects.filter(post__id=instance.id)
+        print(categories)
+        print(Category.objects.get(pk=Post.objects.get(pk=instance.id).category.all([])))
+
