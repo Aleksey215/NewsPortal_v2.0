@@ -17,7 +17,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        context['is_not_author'] = not user.groups.filter(name='authors').exists()
+        context['is_not_author'] = not user.groups.filter(name='Authors').exists()
         return context
 
 
@@ -29,8 +29,8 @@ def upgrade(request):
     :return:
     """
     user = request.user
-    authors_group = Group.objects.get(name='authors')
-    if not user.groups.filter(name='authors').exists():
+    authors_group = Group.objects.get(name='Authors')
+    if not user.groups.filter(name='Authors').exists():
         authors_group.user_set.add(user)
         Author.objects.create(author_user=user)
     return redirect('/')
@@ -44,8 +44,8 @@ def downgrade(request):
     :return:
     """
     user = request.user
-    authors_group = Group.objects.get(name='authors')
-    if user.groups.filter(name='authors').exists():
+    authors_group = Group.objects.get(name='Authors')
+    if user.groups.filter(name='Authors').exists():
         authors_group.user_set.remove(user)
         Author.objects.get(author_user=user).delete()
     return redirect('/')
