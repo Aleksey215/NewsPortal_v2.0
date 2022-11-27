@@ -53,8 +53,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     # filters.py
     'django_filters',
-    # scheduled tasks
-    'django_apscheduler',
 
     # my apps
     'news.apps.NewsConfig',
@@ -179,10 +177,3 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_EMAIL")
-
-# для заданий по расписанию
-# формат даты для задачника
-APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
-
-# таймаут для выполнения задачи
-APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Секунды
