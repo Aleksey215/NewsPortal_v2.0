@@ -1,11 +1,11 @@
 from django.db.models.signals import m2m_changed
 # декоратор для подключения функции к нужному сигналу
 from django.dispatch import receiver
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from .models import *
-from config.settings import DEFAULT_FROM_EMAIL
+from .tasks import send_mail_subscribers_task
+
 
 
 @receiver(signal=m2m_changed, sender=PostCategory)
@@ -21,10 +21,4 @@ def notify_subscribers(sender, instance, **kwargs):
                     'content': instance.content[:50],
                 }
             )
-            msg = EmailMultiAlternatives(
-                subject=f'Здравствуй, {subscriber_name}. Новая статья в вашем разделе!',
-                from_email=DEFAULT_FROM_EMAIL,
-                to=[subscriber_email]
-            )
-            msg.attach_alternative(html_content, 'text/html')
-            msg.send()
+            send_mail_subscribers_task.delay(subscriber_name, subscriber_email, html_content)
