@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     # filters.py
     'django_filters',
+    # для периодических задач
+    'django_celery_beat',
 
     # my apps
     'news.apps.NewsConfig',
@@ -184,3 +186,4 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

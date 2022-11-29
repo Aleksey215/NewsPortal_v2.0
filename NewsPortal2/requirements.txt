@@ -16,8 +16,10 @@ defusedxml==0.7.1
 Django==4.1.2
 django-allauth==0.51.0
 django-apscheduler==0.6.2
+django-celery-beat==2.4.0
 django-crispy-forms==1.14.0
 django-filter==22.1
+django-timezone-field==5.0
 idna==3.4
 kombu==5.2.4
 oauthlib==3.2.2
@@ -26,6 +28,8 @@ prompt-toolkit==3.0.33
 pycparser==2.21
 PyJWT==2.6.0
 pyparsing==3.0.9
+python-crontab==2.6.0
+python-dateutil==2.8.2
 python-dotenv==0.21.0
 python3-openid==3.2.0
 pytz==2022.6
