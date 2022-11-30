@@ -4,15 +4,46 @@
 
 <html lang="en">
 <head>
-    <title> Недельная рассылка новостей по категории: {{ category_name }} </title>
+    <title> Недельная рассылка новостей по категории: {{ category.name }} </title>
 </head>
 <body>
-    <h1> Здравствуйте, {{ user }}!<br>
-         новые статьи из категории < {{ category_name  }} > за прошлую неделю ({{ week_number_last }}) в вашем разделе! </h1>
+<h1> Здравствуйте, {{ username }}!<br>
+    новые статьи из категории < {{ category.name }} > за прошлую неделю ({{ week }}) в вашем разделе!
+</h1>
 <hr>
-{% for post in text %}
-{{ post }} <br>
-{% endfor%}
+<table>
+    <tr>
+        <td>
+            Title
+        </td>
+        <td>
+            Content
+        </td>
+        <td>
+            Author
+        </td>
+        <td>
+            Date/Time
+        </td>
+    </tr>
+    {% for post in posts %}
+    <tr>
+        <td>
+            {{ post.title }}
+        </td>
+        <td>
+            {{ post.content|truncatechars:50 }}
+        </td>
+        <td>
+            {{ post.author }}
+        </td>
+        <td>
+            {{ post.time_of_creation|date:'d.m.Y/H:i' }}
+        </td>
+    </tr>
+    {% endfor%}
+</table>
+
 <br>
 </body>
 </html>
