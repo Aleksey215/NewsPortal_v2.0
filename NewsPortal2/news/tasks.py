@@ -27,7 +27,7 @@ def send_mail_task(subscriber_name, subscriber_email, html_content, weekly_task)
     msg.send()
     print(f'Name: {subscriber_name}')
     print(f'Email: {subscriber_email}')
-    print(f'Content: {html_content}')
+    # print(f'Content: {html_content}')
     print('*** Task completed ***')
 
 
