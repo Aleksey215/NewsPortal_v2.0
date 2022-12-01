@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -77,6 +78,11 @@ class Post(models.Model):
 
     def preview(self):
         return f'{self.content[:125]} + {"..."}'
+
+    # Для кэширования
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'post-{self.pk}')
 
 
 class Comment(models.Model):

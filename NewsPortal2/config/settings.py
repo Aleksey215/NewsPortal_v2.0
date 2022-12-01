@@ -169,7 +169,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_FORMS = {'signup': 'allauth.account.forms.SignupForm'}
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_HMAC = True
-# для автоматического добавления пользователя в группу при регистрации
+# Для автоматического добавления пользователя в группу при регистрации
 ACCOUNT_FORMS = {'signup': 'protect.models.BasicSignupForm'}
 
 # Настройки почтового ящика для рассылки писем
@@ -180,7 +180,7 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_EMAIL")
 
-# настройки для Celery
+# Настройки для Celery
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -188,3 +188,12 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_TIMEZONE = 'Asia/Vladivostok'
+
+# Кэширование
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+        'TIMEOUT': 60,  # время, которое будет храниться кэш
+    }
+}

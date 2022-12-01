@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, DeleteView, ListView, UpdateView
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.core.cache import cache
 
 from .models import Author, Category, Comment, Post, User
 from .filters import PostFilter
@@ -46,6 +47,15 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
+    queryset = Post.objects.all()
+
+    # для кеширования
+    def get_object(self, *args, **kwargs,):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
